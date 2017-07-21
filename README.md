@@ -6,7 +6,7 @@ small service to learn about ansible related stuff. It works on an empty server 
 
 * adding the ```~/.ssh/id_rsa.pub``` to your github account (for ssh cloning purposes) 
 
-* linking /usr/bin/python to /usr/bin/python3 (by default ansible checks for the python binary and if it can't find it, it won't run and ubuntu 17.04 only has python3 installed by default)
+* linking ```/usr/bin/python``` to ```/usr/bin/python3``` (by default ansible checks for the python binary and if it can't find it, it won't run and ubuntu 17.04 only has python3 installed by default)
 
 caveat(s): 
 
