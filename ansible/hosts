@@ -1,2 +1,2 @@
 [echo]
-37.139.18.25 ansible_ssh_user=root
+echo.alexraileanu.me:222 ansible_ssh_user=root
