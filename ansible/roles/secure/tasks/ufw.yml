@@ -1,0 +1,30 @@
+---
+
+- name: configure ufw defaults
+  ufw: 
+    direction: "{{ item.direction }}"
+    policy: "{{ item.policy }}"
+  with_items:
+    - { direction: "incoming", policy: "deny" }
+    - { direction: "outgoing", policy: "allow" }
+  notify: restart ufw
+
+- name: configure ufw rules
+  ufw:
+    rule: allow
+    proto: tcp
+    from_ip: '{{ item.src | default(omit) }}'
+    port: '{{ item.port | default(omit) }}'
+  with_items:
+  # idealy, the ips would be defined as variables but for some reason,
+  # it won't work giving a 'bad source address' error. idk
+  # 
+  #   - { from_ip:"{{ whitelisted_ips.office }}", port: "{{ ssh_port }}" }
+  #   - { from_ip: "{{ whitelisted_ips.home }}", port: "{{ ssh_port }}" }
+
+    - { src: 12.34.56.78, port: "{{ ssh_port }}" }
+    - { src: 12.34.56.99, port: "{{ ssh_port }}" }
+    - { port: 80 }
+    - { port: 443 }
+
+  notify: restart ufw

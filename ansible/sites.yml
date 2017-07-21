@@ -1,8 +1,9 @@
 ---
 - name: Install and configure server for app
   hosts: echo
-  remote_user: echo
+  remote_user: root
   roles:
     - python
     - app
     - nginx
+    - secure
