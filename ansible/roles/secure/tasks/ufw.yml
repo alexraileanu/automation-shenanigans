@@ -1,5 +1,9 @@
 ---
 
+- name: enable ufw
+  ufw:
+    state: enabled
+
 - name: configure ufw defaults
   ufw: 
     direction: "{{ item.direction }}"
@@ -22,7 +26,7 @@
   #   - { from_ip:"{{ whitelisted_ips.office }}", port: "{{ ssh_port }}" }
   #   - { from_ip: "{{ whitelisted_ips.home }}", port: "{{ ssh_port }}" }
 
-    - { src: 12.34.56.78, port: "{{ ssh_port }}" }
+    - { src: 213.127.204.188, port: "{{ ssh_port }}" }
     - { src: 12.34.56.99, port: "{{ ssh_port }}" }
     - { port: 80 }
     - { port: 443 }

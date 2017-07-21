@@ -22,4 +22,7 @@
     dest: /etc/systemd/system/echo.service
 
 - name: start app service
-  service: name=echo state=started
+  service: 
+    name: echo 
+    state: started
+    enabled: yes

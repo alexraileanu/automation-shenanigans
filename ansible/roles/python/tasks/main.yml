@@ -14,7 +14,3 @@
 - name: install virtualenv
   pip: 
     name: virtualenv
-
-# todo: investigate if really needed or not idk
-- name: link python to python3
-  shell: ln -s /usr/bin/python3 /usr/bin/python

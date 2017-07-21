@@ -10,7 +10,6 @@
   template: 
     src: echo.conf.j2 
     dest: /etc/nginx/sites-enabled/echo.conf 
-    validate: nginx -t -c %s
   notify: restart nginx
 
 - name: start nginx service
