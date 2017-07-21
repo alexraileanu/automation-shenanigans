@@ -3,7 +3,7 @@ Description=uWSGI instance to serve echo
 After=network.target
 
 [Service]
-User=root
+User=echo
 Group=www-data
 WorkingDirectory={{ application_path }}
 Environment="PATH={{ venv_path }}/bin"

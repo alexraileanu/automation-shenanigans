@@ -1,0 +1,14 @@
+---
+
+- name: create echo user
+  user:
+    name: echo
+    group: sudo
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+
+- name: add ssh-key to user
+  authorized_key:
+    user: echo
+    state: present
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
