@@ -1,0 +1,15 @@
+---
+# ensure that python, virtualenv and pip are installed
+
+- name: install python
+  apt: name=python3 state=present
+
+- name: install pip
+  apt: name=python3-pip state=present
+
+- name: install virtualenv
+  pip: name=virtualenv
+
+# todo: investigate if really needed or not idk
+- name: link python to python3
+  shell: ln -s /usr/bin/python3 /usr/bin/python

@@ -1,0 +1,18 @@
+---
+# install and configure nginx
+
+- name: Install nginx
+  apt: name=nginx state=present
+  tags: nginx
+
+- name: Add nginx vhost file
+  template: 
+    src: echo.conf.j2 
+    dest: /etc/nginx/sites-enabled/echo.conf 
+    validate: nginx -t -c %s
+  tags: nginx
+  notify: restart nginx
+
+- name: Start nginx service
+  service: name=nginx state=restarted enabled=yes
+  tags: nginx

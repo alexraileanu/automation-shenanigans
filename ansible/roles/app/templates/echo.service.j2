@@ -1,0 +1,13 @@
+[Unit]
+Description=uWSGI instance to serve echo
+After=network.target
+
+[Service]
+User=echo
+Group=www-data
+WorkingDirectory={{ application_path }}
+Environment="PATH={{ venv_path }}/bin"
+ExecStart={{ venv_path }}/bin/uwsgi --ini echo.ini
+
+[Install]
+WantedBy=multi-user.target
