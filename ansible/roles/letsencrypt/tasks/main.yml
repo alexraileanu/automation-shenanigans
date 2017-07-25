@@ -1,0 +1,41 @@
+---
+
+- name: install letsencrypt
+  apt:
+    name: letsencrypt
+    state: latest
+
+- name: create letsencrypt directory
+  file:
+    name: /var/www/letsencrypt
+    state: directory
+    group: www-data
+
+- name: copy nginx config for letsencrypt requests
+  template:
+    src: nginx-le.conf.j2
+    dest: /etc/nginx/sites-enabled/nginx-le.conf
+  notify: restart nginx
+
+- name: create letsencrypt cert
+  shell: letsencrypt certonly -n --webroot -w /var/www/letsencrypt -m "{{ letsencrypt_email }}" --agree-tos -d "{{ server_name }}" --redirect
+  args:
+    creates: /etc/letsencrypt/live/"{{ server_name }}"
+
+- name: generate dhparams
+  shell: openssl dhparam -out /etc/nginx/dhparams.pem 2048
+  args:
+    creates: /etc/letsencrypt/dhparams.pem
+  notify: restart nginx
+
+- name: add nginx vhost file for app
+  template: 
+    src: echo.conf.j2 
+    dest: /etc/nginx/sites-enabled/echo.conf 
+  notify: restart nginx
+
+- name: letsencrypt renewal cron
+  cron:
+    name: le
+    special_time: weekly
+    job: letsencrypt renew --certonly -n --webroot -w /var/www/letsencrypt -m "{{ letsencrypt_email }}" --agree-tos -d "{{ server_name }}" && systemctl restart nginx

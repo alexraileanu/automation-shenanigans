@@ -7,4 +7,5 @@
     - python
     - app
     - nginx
+    - letsencrypt
     - secure

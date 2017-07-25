@@ -14,3 +14,5 @@
 - name: install virtualenv
   pip: 
     name: virtualenv
+    # idk why all of a sudden it won't install pip regularily. no clue, but it needs the pip3 binary instead of pip.
+    executable: pip3
