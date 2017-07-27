@@ -19,7 +19,6 @@ server {
     ssl_prefer_server_ciphers on;
 
     location / {
-        include uwsgi_params;
-        uwsgi_pass unix:{{ socket_path }};
+        proxy_pass http://localhost:5000;
     }
 }

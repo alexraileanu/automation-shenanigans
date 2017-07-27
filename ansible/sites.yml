@@ -4,8 +4,7 @@
   remote_user: echo
   roles:
     - system
-    - python
-    - app
+    - docker
     - nginx
     - letsencrypt
     - secure

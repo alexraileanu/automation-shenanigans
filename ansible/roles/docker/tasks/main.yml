@@ -1,0 +1,19 @@
+---
+
+- name: install docker
+  apt:
+    name: docker.io
+    state: present
+
+- name: clone project to temp folder
+  git:
+    repo: git@github.com:alexraileanu/automation-shenanigans.git
+    dest: /tmp/echo
+    version: docker-container
+    accept_hostkey: True
+
+- name: create the docker container
+  shell: docker build -t echo /tmp/echo
+
+- name: run docker container
+  shell: docker run -d -p 5000:5000 --name echo echo
