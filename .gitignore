@@ -1,3 +1,6 @@
 .vscode
 venv
-ansible/sites.retry
+*.retry
+*.tfstate
+*.tfstate.backup
+inventory

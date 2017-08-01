@@ -19,3 +19,14 @@ The way I integrated ELK with this service is like so:
 - Filebeat on the echo server reading from serveral log files and shipping to a Redis server
 - Logstash reads from that Redis server, applies the filters in the `logstash.conf` file and inserts the data into ElasticSearch
 - Kibana is used then for displaying metrics et al
+
+### Terraform
+
+Being the lazy person I am, I decided to look into [terraform](https://terraform.io). The idea is the following: 
+
+- Terraform creates a DigitalOcean droplet
+- Updates the DNS configuration on DigitalOcean with the newly created droplet
+- Runs Ansible to install all the things
+- When everything is done, I just navigate to my service's URL and see my app up and running as expected
+
+At the moment of writing this (01/08/2017) it's still not quite working as I'd want it to so it's still WIP.
