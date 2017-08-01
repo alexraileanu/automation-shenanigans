@@ -1,0 +1,31 @@
+filebeat.prospectors:
+- input_type: log
+  fields:
+    type: ufw
+  fields_under_root: true
+  paths:
+    - /var/log/ufw.log
+
+- input_type: log
+  fields:
+    type: nginx_access
+  fields_under_root: true
+  paths: 
+    - /var/log/nginx/access.log
+
+  template.name: "filebeat"
+
+  # Path to template file
+  template.path: "filebeat.template.json"
+
+  # Overwrite existing template
+  template.overwrite: false
+  
+output.redis:
+  hosts: ['redishost']
+  port: 'redisport'
+  index: 'filebeat.echo'
+  password: ''
+
+logging.to_files: true
+logging.files:

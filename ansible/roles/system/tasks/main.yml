@@ -12,3 +12,7 @@
     user: echo
     state: present
     key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+- name: set proper timezone
+  timezone:
+    name: Europe/Amsterdam

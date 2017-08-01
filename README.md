@@ -11,3 +11,11 @@ small service to learn about ansible related stuff. It works on an empty server 
 caveat(s): 
 
 * the first time it runs, the hosts file should have the port 22 for ssh (the default ssh port) but since the port is changed in the sshd_config file, the next times you gotta use the port from the config file (only way I could find to handle port changes in ssh)
+
+### ELK
+
+The way I integrated ELK with this service is like so:
+
+- Filebeat on the echo server reading from serveral log files and shipping to a Redis server
+- Logstash reads from that Redis server, applies the filters in the `logstash.conf` file and inserts the data into ElasticSearch
+- Kibana is used then for displaying metrics et al
