@@ -15,6 +15,7 @@ resource "digitalocean_record" "echo" {
     type    = "A"
     name    = "echo"
     value   = "${digitalocean_droplet.echo.ipv4_address}"
+    ttl     = "60"
 }
 
 resource "null_resource" "echo" {
@@ -29,10 +30,14 @@ resource "null_resource" "echo" {
         inline = [
             "ln -s /usr/bin/python3 /usr/bin/python"
         ]
-
+         # The only reason for this to fail in this setup is if the file already exists
+         # which means this terraform has already ran on the server, so it's ok to ignore it
+        on_failure = "continue"
     }
 
     provisioner "local-exec" {
-        command = "ansible-playbook ansible/sites.yml -e 'ansible_host=${digitalocean_droplet.echo.ipv4_address}'"
+        # can't use the hosts file to connect with ansible because it's likely that the dns changes
+        # haven't propagated yet so the connection is made directly with the ip received from digitalocean
+        command = "ansible-playbook ansible/sites.yml -e 'ansible_host=${digitalocean_droplet.echo.ipv4_address}' -e 'ansible_ssh_user=root'"
     }
 }

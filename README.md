@@ -28,5 +28,3 @@ Being the lazy person I am, I decided to look into [terraform](https://terraform
 - Updates the DNS configuration on DigitalOcean with the newly created droplet
 - Runs Ansible to install all the things
 - When everything is done, I just navigate to my service's URL and see my app up and running as expected
-
-At the moment of writing this (01/08/2017) it's still not quite working as I'd want it to so it's still WIP.

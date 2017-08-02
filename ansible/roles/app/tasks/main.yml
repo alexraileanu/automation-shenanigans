@@ -3,7 +3,7 @@
 
 - name: checkout app from github
   git: 
-    repo: git@github.com:alexraileanu/automation-shenanigans.git
+    repo: git://github.com/alexraileanu/automation-shenanigans.git
     dest: "{{ application_path }}"
     accept_hostkey: True
 
