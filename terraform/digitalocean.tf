@@ -1,5 +1,9 @@
+data "vault_generic_secret" "do_auth" {
+    path = "secret/do_auth"
+}
+
 provider "digitalocean" {
-    token = "${var.do_token}"
+    token = "${data.vault_generic_secret.do_auth.data["token"]}"
 }
 
 resource "digitalocean_droplet" "echo" {
@@ -28,6 +32,7 @@ resource "null_resource" "echo" {
 
     provisioner "remote-exec" {
         inline = [
+            "sleep 30s",
             "ln -s /usr/bin/python3 /usr/bin/python"
         ]
          # The only reason for this to fail in this setup is if the file already exists
@@ -40,4 +45,26 @@ resource "null_resource" "echo" {
         # haven't propagated yet so the connection is made directly with the ip received from digitalocean
         command = "ansible-playbook ansible/sites.yml -e 'ansible_host=${digitalocean_droplet.echo.ipv4_address}' -e 'ansible_ssh_user=root'"
     }
+}
+
+resource "digitalocean_firewall" "echo" {
+    name = "echo-fw"
+
+    inbound_rule = [
+        {
+            protocol    = "tcp"
+            port_range  = "80"
+        }, {
+            protocol    = "tcp"
+            port_range  = "443"
+        }, {
+            protocol         = "tcp"
+            port_range       = "222"
+            source_addresses = ["213.127.204.188"]
+        }, {
+            protocol = "icmp"
+        }
+    ]
+
+    droplet_ids = ["${digitalocean_droplet.echo.id}"]
 }
