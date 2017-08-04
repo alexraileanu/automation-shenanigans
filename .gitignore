@@ -4,3 +4,4 @@ venv
 *.tfstate
 *.tfstate.backup
 inventory
+.terraform

@@ -1,7 +1,3 @@
-variable "do_token" {
-    default = ""
-}
-
 variable "os" {
     description = "Key for Ubuntu 17.04"
     default     = "ubuntu-17-04-x64"
