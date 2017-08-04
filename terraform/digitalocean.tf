@@ -43,7 +43,7 @@ resource "null_resource" "echo" {
     provisioner "local-exec" {
         # can't use the hosts file to connect with ansible because it's likely that the dns changes
         # haven't propagated yet so the connection is made directly with the ip received from digitalocean
-        command = "ansible-playbook ansible/sites.yml -e 'ansible_host=${digitalocean_droplet.echo.ipv4_address}' -e 'ansible_ssh_user=root'"
+        command = "ansible-playbook ansible/sites.yml -e 'ansible_host=${digitalocean_droplet.echo.ipv4_address}' -e 'ansible_ssh_user=root' --vault-password-file ~/.vault_pass.txt"
     }
 }
 
