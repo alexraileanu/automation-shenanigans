@@ -23,7 +23,7 @@
     creates: /etc/letsencrypt/live/"{{ server_name }}"
 
 - name: generate dhparams
-  shell: openssl dhparam -out /etc/nginx/dhparams.pem 2048
+  shell: openssl dhparam -dsaparam -out /etc/nginx/dhparams.pem 2048
   args:
     creates: /etc/letsencrypt/dhparams.pem
   notify: restart nginx

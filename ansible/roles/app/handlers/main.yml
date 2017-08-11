@@ -1,0 +1,5 @@
+---
+- name: restart app service
+  service: 
+    name: echo 
+    state: restarted

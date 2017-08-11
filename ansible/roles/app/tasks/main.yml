@@ -29,8 +29,7 @@
     group: www-data
     recurse: yes
 
-- name: start app service
-  service: 
-    name: echo 
-    state: started
-    enabled: yes
+- name: copy redis conf
+  template:
+    src: echo.cfg.j2 
+    dest: "{{ application_path }}/config/echo.cfg"
