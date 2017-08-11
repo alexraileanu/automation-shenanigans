@@ -71,4 +71,3 @@
   service: 
     name: redis 
     state: restarted
-  notify: restart app service

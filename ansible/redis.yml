@@ -5,5 +5,3 @@
   roles: 
     - redis
     - secure
-  handlers:
-    - include: roles/app/handlers/main.yml
