@@ -24,7 +24,8 @@ The way I integrated ELK with this service is like so:
 
 Being the lazy person I am, I decided to look into [terraform](https://terraform.io). The idea is the following: 
 
-- Terraform creates a DigitalOcean droplet
-- Updates the DNS configuration on DigitalOcean with the newly created droplet
-- Runs Ansible to install all the things
+- Terraform creates 2 DigitalOcean droplets
+- Updates the DNS configuration on DigitalOcean with the newly created droplets
+- Runs Ansible to installs on one droplet nginx and the app itself and on the other droplet installs a redis instance. So the application communicates with the redis instance (it just logs all the queries, nothing too fancy)
+- Firewalls are set up so there's no funny things happening with access to and from the droplets
 - When everything is done, I just navigate to my service's URL and see my app up and running as expected
