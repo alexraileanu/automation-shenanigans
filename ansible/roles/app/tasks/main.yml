@@ -33,3 +33,9 @@
   template:
     src: echo.cfg.j2 
     dest: "{{ application_path }}/config/echo.cfg"
+
+- name: start echo service
+  service: 
+    name: echo 
+    state: started
+    enabled: yes 

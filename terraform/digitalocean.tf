@@ -81,6 +81,10 @@ resource "digitalocean_firewall" "echo" {
         }, {
             protocol         = "icmp"
             source_addresses = ["0.0.0.0/0", "::/0"]
+        }, {
+            protocol         = "tcp"
+            port_range       = "6379"
+            source_addresses = ["${element(digitalocean_droplet.echo-cluster.*.ipv4_address, 0)}"]
         }
     ]
 

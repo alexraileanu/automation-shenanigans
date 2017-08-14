@@ -18,7 +18,7 @@
   notify: restart nginx
 
 - name: create letsencrypt cert
-  shell: letsencrypt certonly -n --webroot -w /var/www/letsencrypt -m "{{ letsencrypt_email }}" --agree-tos -d "{{ server_name }}" --redirect
+  shell: letsencrypt certonly --staging -n --webroot -w /var/www/letsencrypt -m "{{ letsencrypt_email }}" --agree-tos -d "{{ server_name }}" --redirect
   args:
     creates: /etc/letsencrypt/live/"{{ server_name }}"
 
@@ -38,4 +38,4 @@
   cron:
     name: le
     special_time: weekly
-    job: letsencrypt renew --certonly -n --webroot -w /var/www/letsencrypt -m "{{ letsencrypt_email }}" --agree-tos -d "{{ server_name }}" --redirect && systemctl restart nginx
+    job: letsencrypt renew --staging --certonly -n --webroot -w /var/www/letsencrypt -m "{{ letsencrypt_email }}" --agree-tos -d "{{ server_name }}" --redirect && systemctl restart nginx

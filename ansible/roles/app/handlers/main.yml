@@ -3,3 +3,4 @@
   service: 
     name: echo 
     state: restarted
+    enabled: yes
