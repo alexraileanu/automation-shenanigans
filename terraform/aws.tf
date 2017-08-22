@@ -45,7 +45,28 @@ resource "aws_security_group" "echo_web_sg" {
         protocol    = "-1"
         cidr_blocks = ["0.0.0.0/0"]
     }
+}
 
+resource "aws_dynamodb_table" "echo_dynamodb" {
+    name = "echo"
+    read_capacity = 5
+    write_capacity = 5
+    hash_key = "id"
+
+    attribute {
+        name = "id"
+        type = "S"
+    }
+
+    attribute {
+        name = "q"
+        type = "S"
+    }
+
+    attribute {
+        name = "date"
+        type = "S"
+    }
 }
 
 resource "aws_key_pair" "auth" {

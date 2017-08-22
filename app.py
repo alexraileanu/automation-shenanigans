@@ -5,7 +5,6 @@ import uuid
 import boto3
 
 app = Flask(__name__)
-app.config.from_pyfile('config/echo.cfg')
 
 @app.route('/<echo>')
 def echo(echo):
