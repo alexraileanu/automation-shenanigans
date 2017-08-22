@@ -1,7 +1,0 @@
----
-- name: Install and configure redis instance
-  hosts: echo-redis
-  remote_user: echo-redis
-  roles: 
-    - redis
-    - secure

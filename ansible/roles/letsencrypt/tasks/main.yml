@@ -1,7 +1,7 @@
 ---
 
 - name: install letsencrypt
-  apt:
+  yum:
     name: letsencrypt
     state: latest
 

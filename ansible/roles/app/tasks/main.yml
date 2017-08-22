@@ -6,6 +6,7 @@
     repo: git://github.com/alexraileanu/automation-shenanigans.git
     dest: "{{ application_path }}"
     accept_hostkey: True
+    version: aws
 
 - name: activate or create virtualenv
   shell: /usr/local/bin/virtualenv "{{ venv_path }}"
@@ -28,11 +29,6 @@
     owner: echo
     group: www-data
     recurse: yes
-
-- name: copy redis conf
-  template:
-    src: echo.cfg.j2 
-    dest: "{{ application_path }}/config/echo.cfg"
 
 - name: start echo service
   service: 

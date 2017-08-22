@@ -2,7 +2,7 @@
 # install and configure nginx
 
 - name: install nginx
-  apt: 
+  yum: 
     name: nginx 
     state: present
 

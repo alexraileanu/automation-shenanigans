@@ -2,14 +2,18 @@ from flask import Flask
 from flask_redis import FlaskRedis
 import time
 import uuid
+import boto3
 
 app = Flask(__name__)
 app.config.from_pyfile('config/echo.cfg')
 
-redis = FlaskRedis(app)
-
 @app.route('/<echo>')
 def echo(echo):
-    redis_stuff = {'id': str(uuid.uuid4()), 'q': echo, 'date': time.time()}
-    redis.lpush('echo', redis_stuff)
+    dynamodb = boto3.resource('dynamodb')
+
+    data = {'id': str(uuid.uuid4()), 'q': echo, 'date': str(time.time())}
+
+    table = dynamodb.Table('echo')
+    table.put_item(Item=data)
+    
     return echo

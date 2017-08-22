@@ -17,6 +17,6 @@
   timezone:
     name: Europe/Amsterdam
 
-- name: run apt update
-  apt:
+- name: run yum update
+  yum:
     update_cache: yes

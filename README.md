@@ -1,12 +1,6 @@
 ## echo "service"
 
-small service to learn about ansible related stuff. It works on an empty server only after:
-
-* adding your ssh key into the ```~/.ssh/authorized_keys``` file
-
-* adding the ```~/.ssh/id_rsa.pub``` to your github account (for ssh cloning purposes) 
-
-* linking ```/usr/bin/python``` to ```/usr/bin/python3``` (by default ansible checks for the python binary and if it can't find it, it won't run and ubuntu 17.04 only has python3 installed by default)
+small service to learn about ansible related stuff. It works on an empty server without any prior config just by running ansible.
 
 caveat(s): 
 
@@ -24,8 +18,8 @@ The way I integrated ELK with this service is like so:
 
 Being the lazy person I am, I decided to look into [terraform](https://terraform.io). The idea is the following: 
 
-- Terraform creates 2 DigitalOcean droplets
-- Updates the DNS configuration on DigitalOcean with the newly created droplets
-- Runs Ansible to installs on one droplet nginx and the app itself and on the other droplet installs a redis instance. So the application communicates with the redis instance (it just logs all the queries, nothing too fancy)
-- Firewalls are set up so there's no funny things happening with access to and from the droplets
+- Terraform spawns one EC2 instance and runs ansible on it and creates a DynamoDB table (used in the application for logging purposes)
+- Terraform updates the DNS configuration on DigitalOcean with the newly created EC2 instance's IP (I chose to use DigitalOcean to manage the DNS config because it's free while AWS charges for that as far as I can tell)
+- Terraform creates the needed security groups in AWS so that there's no funny stuff regarding access from and to the instance
+- Ansible then installs and configures the instance so that my service runs on it
 - When everything is done, I just navigate to my service's URL and see my app up and running as expected

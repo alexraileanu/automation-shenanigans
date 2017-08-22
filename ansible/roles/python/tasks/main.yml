@@ -2,12 +2,12 @@
 # ensure that python, virtualenv and pip are installed
 
 - name: install python
-  apt:
+  yum:
     name: python3
     state: present
 
 - name: install pip
-  apt:
+  yum:
     name: python3-pip
     state: present
 
