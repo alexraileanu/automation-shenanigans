@@ -1,10 +1,5 @@
 ---
 
-- name: install letsencrypt
-  yum:
-    name: letsencrypt
-    state: latest
-
 - name: create letsencrypt directory
   file:
     name: /var/www/letsencrypt

@@ -1,18 +1,6 @@
 ---
 # ensure that python, virtualenv and pip are installed
 
-- name: install python
-  yum:
-    name: python3
-    state: present
-
-- name: install pip
-  yum:
-    name: python3-pip
-    state: present
-
 - name: install virtualenv
-  pip:
-    name: virtualenv
-    # idk why all of a sudden it won't install pip regularily. no clue, but it needs the pip3 binary instead of pip.
-    executable: pip3
+  shell: pip3 install virtualenv
+  become: true

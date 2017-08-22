@@ -3,7 +3,6 @@
 - name: create echo user
   user:
     name: echo
-    group: sudo
     ssh_key_bits: 2048
     ssh_key_file: .ssh/id_rsa
 
@@ -17,6 +16,20 @@
   timezone:
     name: Europe/Amsterdam
 
-- name: run yum update
-  yum:
+- name: run apt update
+  apt:
     update_cache: yes
+
+- name: install necessary packages
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - python3-pip
+    - git
+    - nginx
+    - letsencrypt
+
+- name: copy dynamodb credentials
+  copy:
+    src: "~/.dynamodb"
+    dest: "/home/echo/.aws"

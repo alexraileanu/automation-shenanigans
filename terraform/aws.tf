@@ -54,14 +54,14 @@ resource "aws_key_pair" "auth" {
 }
 
 resource "aws_instance" "echo_web" {
-    ami           = "ami-82be18ed"
+    ami           = "ami-1e339e71"
     instance_type = "t2.nano"
     key_name      = "echo-key"
     vpc_security_group_ids = ["${aws_security_group.echo_web_sg.id}"]
     key_name = "${aws_key_pair.auth.id}"
 
     connection {
-        user        = "ec2-user"
+        user = "ubuntu"
     }
 
     provisioner "local-exec" {
@@ -69,26 +69,16 @@ resource "aws_instance" "echo_web" {
     }
 
     provisioner "remote-exec" {
-        inline =  [
-            "mkdir /home/ec2-user/.aws"
+        inline = [
+            "sudo ln -s /usr/bin/python3 /usr/bin/python"
         ]
-    }
-
-    provisioner "file" {
-        source      = "~/.dynamodb/*"
-        destination = "/home/ec2-user/.aws"
-    }
-
-    provisioner "local-exec" {
-        # Creates a hosts file with the name of the droplet to be a tiny bit more organized i guess
-        command = "echo '[echo-web]\n${aws_instance.echo_web.public_ip} ansible_ssh_user=ec2-user' > ansible/hosts/echo"
+         # The only reason for this to fail in this setup is if the file already exists
+         # which means this terraform has already ran on the server, so it's ok to ignore it
+        on_failure = "continue"
     }
 
     provisioner "local-exec" {
-        # i know this will add the variables echo_ip and redis_ip to both ansible hosts but idk how to do it otherwise
-        # i'd only need this variable on one of the iterations of the loop and i'd rather not have if/else
-        # TODO: find a better solution
-        command = "ansible-playbook ansible/web.yml -i ansible/hosts/echo -e 'ansible_ssh_user=ec2-user' --vault-password-file ~/.ansible/passwd"
+        command = "echo '[echo-web]\n${aws_instance.echo_web.public_ip} ansible_ssh_user=ubuntu' > ansible/hosts/echo"
     }
 
     tags {
@@ -102,4 +92,15 @@ resource "digitalocean_record" "echo" {
     name    = "echo"
     value   = "${aws_instance.echo_web.public_ip}"
     ttl     = "60"
+}
+
+resource "null_resource" "echo-web" {
+    connection {
+        user = "ubuntu"
+        host = "${aws_instance.echo_web.public_ip}"
+    }
+
+    provisioner "local-exec" {
+        command = "ansible-playbook ansible/web.yml -i ansible/hosts/echo -e 'ansible_ssh_user=ubuntu' --vault-password-file ~/.ansible/passwd"
+    }
 }

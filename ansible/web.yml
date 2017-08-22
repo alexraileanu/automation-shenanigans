@@ -2,6 +2,7 @@
 - name: Install and configure server for echo-web
   hosts: echo-web
   remote_user: echo-web
+  become: True
   roles:
     - system
     - python
