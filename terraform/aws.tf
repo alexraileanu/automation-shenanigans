@@ -57,16 +57,6 @@ resource "aws_dynamodb_table" "echo_dynamodb" {
         name = "id"
         type = "S"
     }
-
-    attribute {
-        name = "q"
-        type = "S"
-    }
-
-    attribute {
-        name = "date"
-        type = "S"
-    }
 }
 
 resource "aws_key_pair" "auth" {

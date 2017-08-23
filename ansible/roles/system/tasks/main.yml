@@ -3,6 +3,7 @@
 - name: create echo user
   user:
     name: echo
+    shell: /bin/bash
     ssh_key_bits: 2048
     ssh_key_file: .ssh/id_rsa
 
@@ -31,5 +32,5 @@
 
 - name: copy dynamodb credentials
   copy:
-    src: "~/.dynamodb"
+    src: "~/.dynamodb/"
     dest: "/home/echo/.aws"
