@@ -8,3 +8,4 @@ inventory
 config/*
 !config/.gitkeep
 __pycache__
+.idea
